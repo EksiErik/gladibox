@@ -1,0 +1,14 @@
+{
+    "name": "gladibox",
+    "version": "1.0.0",
+    "description": "GladiBox - Minecraft Box PvP Sunucusu için Web Sitesi",
+    "main": "index.html",
+    "scripts": {
+      "start": "vercel dev",
+      "deploy": "vercel --prod"
+    },
+    "author": "EksiErik",
+    "license": "MIT",
+    "dependencies": {}
+  }
+  
