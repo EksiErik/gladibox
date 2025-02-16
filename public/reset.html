@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şifre Sıfırlama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Şifrenizi Sıfırlayın</h1>
+        <form id="resetForm">
+            <input type="email" id="resetEmail" placeholder="E-posta Adresi" required>
+            <button type="submit">Şifreyi Sıfırla</button>
+        </form>
+        <p>Şifrenizi hatırladınız mı? <a href="login.html">Giriş Yapın</a></p>
+        <p><a href="index.html">Ana Sayfaya Git</a></p>
+    </div>
+
+    <script>
+        document.getElementById("resetForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById("resetEmail").value;
+
+            if (email) {
+                // E-posta gönderme işlemi simüle ediliyor
+                alert("Şifre sıfırlama talebi gönderildi. E-posta adresiniz: " + email);
+                // Burada PHP veya Node.js kullanarak gerçek bir e-posta gönderme işlemi yapılabilir.
+                window.location.href = "index.html"; // Ana sayfaya yönlendir
+            } else {
+                alert("Lütfen geçerli bir e-posta adresi girin!");
+            }
+        });
+    </script>
+</body>
+</html>

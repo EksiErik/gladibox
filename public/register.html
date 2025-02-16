@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş Yap</title>
+    <title>Kayıt Ol</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,31 +40,35 @@
 </head>
 <body>
     <div class="container">
-        <h1>Giriş Yap</h1>
-        <form id="loginForm">
-            <input type="text" id="loginUsername" placeholder="Minecraft Kullanıcı Adı" required>
-            <input type="password" id="loginPassword" placeholder="Şifre" required>
-            <button type="submit">Giriş Yap</button>
+        <h1>Kayıt Ol</h1>
+        <form id="registerForm">
+            <input type="text" id="minecraftUsername" placeholder="Minecraft Kullanıcı Adı" required>
+            <input type="email" id="email" placeholder="E-posta Adresi" required>
+            <input type="password" id="password" placeholder="Şifre" required>
+            <button type="submit">Kayıt Ol</button>
         </form>
-        <p>Hesabınız yok mu? <a href="register.html">Kayıt Olun</a></p>
-        <p><a href="reset.html">Şifrenizi mi unuttunuz?</a></p>
+        <p>Hesabınız var mı? <a href="login.html">Giriş Yapın</a></p>
+        <p><a href="index.html">Ana Sayfaya Git</a></p>
     </div>
 
     <script>
-        document.getElementById("loginForm").addEventListener("submit", function(e) {
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
             e.preventDefault();
 
-            const username = document.getElementById("loginUsername").value;
-            const password = document.getElementById("loginPassword").value;
+            const username = document.getElementById("minecraftUsername").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-            const storedUsername = localStorage.getItem("username");
-            const storedPassword = localStorage.getItem("password");
+            if (username && email && password) {
+                // Kayıt bilgilerini localStorage'a kaydet
+                localStorage.setItem("username", username);
+                localStorage.setItem("email", email);
+                localStorage.setItem("password", password);
 
-            if (username === storedUsername && password === storedPassword) {
-                alert("Giriş başarılı!");
+                alert("Kayıt başarılı!");
                 window.location.href = "index.html"; // Ana sayfaya yönlendir
             } else {
-                alert("Kullanıcı adı veya şifre yanlış!");
+                alert("Lütfen tüm alanları doldurun!");
             }
         });
     </script>
