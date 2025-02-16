@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .item {
+            background: #444;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .buy-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .buy-btn:hover {
+            background: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Market</h1>
+        <div class="item">
+            <span>Elmas Kılıç</span>
+            <button class="buy-btn" onclick="buyItem('Elmas Kılıç')">Satın Al - 500 Coin</button>
+        </div>
+        <div class="item">
+            <span>Zırh Seti</span>
+            <button class="buy-btn" onclick="buyItem('Zırh Seti')">Satın Al - 1000 Coin</button>
+        </div>
+        <div class="item">
+            <span>Altın Elma</span>
+            <button class="buy-btn" onclick="buyItem('Altın Elma')">Satın Al - 200 Coin</button>
+        </div>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        function buyItem(item) {
+            document.getElementById("message").textContent = item + " satın alındı!";
+        }
+    </script>
+</body>
+</html>

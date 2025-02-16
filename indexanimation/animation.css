@@ -1,0 +1,42 @@
+/* Arka Plan Renk Değişimi Animasyonu */
+@keyframes backgroundAnimation {
+    0% {
+        background-color: #222;
+    }
+    50% {
+        background-color: #3498db;
+    }
+    100% {
+        background-color: #222;
+    }
+}
+
+body {
+    animation: backgroundAnimation 10s infinite;
+}
+
+/* Sayfa öğelerine animasyonlar ekleyelim */
+h1, p, button {
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    animation-delay: 1s;
+}
+
+h1 {
+    animation-delay: 0.5s;
+}
+
+p {
+    animation-delay: 1s;
+}
+
+button {
+    animation-delay: 2s;
+}
+
+/* Fade-in animasyonu */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}

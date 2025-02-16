@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Giriş Yap</h1>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Minecraft Kullanıcı Adı" required>
+            <input type="password" id="loginPassword" placeholder="Şifre" required>
+            <button type="submit">Giriş Yap</button>
+        </form>
+        <p>Hesabınız yok mu? <a href="register.html">Kayıt Olun</a></p>
+        <p><a href="reset.html">Şifrenizi mi unuttunuz?</a></p>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById("loginUsername").value;
+            const password = document.getElementById("loginPassword").value;
+
+            const storedUsername = localStorage.getItem("username");
+            const storedPassword = localStorage.getItem("password");
+
+            if (username === storedUsername && password === storedPassword) {
+                alert("Giriş başarılı!");
+                window.location.href = "index.html"; // Ana sayfaya yönlendir
+            } else {
+                alert("Kullanıcı adı veya şifre yanlış!");
+            }
+        });
+    </script>
+</body>
+</html>

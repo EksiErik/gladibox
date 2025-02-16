@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GladiBox - Minecraft PvP</title>
+    <style>
+        /* Arka Plan Animasyonu */
+        @keyframes backgroundAnimation {
+            0% { background-color: #222; }
+            50% { background-color: #3498db; }
+            100% { background-color: #222; }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            animation: backgroundAnimation 10s infinite;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: zoomIn 2s ease-out forwards;
+        }
+
+        /* Başlık Animasyonu */
+        @keyframes zoomIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        p {
+            font-size: 1.2em;
+            opacity: 0;
+            animation: fadeInUp 2s forwards;
+            animation-delay: 1s;
+        }
+
+        @keyframes fadeInUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            opacity: 0;
+            animation: pulse 1.5s infinite ease-in-out;
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <h1>GladiBox PvP Sunucusu</h1>
+    <p>En heyecanlı PvP deneyimi seni bekliyor!</p>
+    <button onclick="window.location.href='register.html'">Kayıt Ol</button>
+</body>
+</html>

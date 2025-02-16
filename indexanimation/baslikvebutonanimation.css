@@ -1,0 +1,41 @@
+/* Başlık Animasyonu */
+h1 {
+    font-size: 3em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: zoomIn 2s ease-out;
+}
+
+/* Buton Animasyonu */
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Zoom In Animasyonu */
+@keyframes zoomIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Pulse Animasyonu */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kayıt Ol</h1>
+        <form id="registerForm">
+            <input type="text" id="minecraftUsername" placeholder="Minecraft Kullanıcı Adı" required>
+            <input type="email" id="email" placeholder="E-posta Adresi" required>
+            <input type="password" id="password" placeholder="Şifre" required>
+            <button type="submit">Kayıt Ol</button>
+        </form>
+        <p>Hesabınız var mı? <a href="login.html">Giriş Yapın</a></p>
+    </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById("minecraftUsername").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (username && email && password) {
+                // Kayıt bilgilerini localStorage'a kaydet
+                localStorage.setItem("username", username);
+                localStorage.setItem("email", email);
+                localStorage.setItem("password", password);
+
+                alert("Kayıt başarılı!");
+                window.location.href = "index.html"; // Ana sayfaya yönlendir
+            } else {
+                alert("Lütfen tüm alanları doldurun!");
+            }
+        });
+    </script>
+</body>
+</html>
