@@ -10,7 +10,6 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #222;
             color: white;
             text-align: center;
             overflow-x: hidden;
@@ -20,22 +19,51 @@
             margin: 0;
         }
 
-        /* Arka plan animasyonu */
+        /* Arka plan RGB animasyonu */
         .background-animation {
-            position: fixed; /* Sabit olmasını sağlarız */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh; /* Tüm ekranı kaplayacak şekilde ayarlıyoruz */
-            background: linear-gradient(45deg, #3498db, #2980b9, #8e44ad, #e74c3c);
+            height: 100vh;
+            background: rgb(0, 0, 255);
+            background: linear-gradient(45deg, rgb(0, 255, 255), rgb(0, 0, 255), rgb(255, 0, 255), rgb(255, 255, 0));
             background-size: 400% 400%;
-            animation: gradientAnimation 10s ease infinite;
-            z-index: -1; /* Tüm içeriklerin arkasında kalacak şekilde ayarlıyoruz */
+            animation: rgbAnimation 15s ease infinite;
+            z-index: -1;
         }
-        @keyframes gradientAnimation {
+
+        @keyframes rgbAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* Kayan yıldızlar */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: starMovement 3s infinite linear;
+        }
+
+        @keyframes starMovement {
+            0% {
+                transform: translateX(-50%) translateY(-50%);
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh);
+            }
         }
 
         /* Navbar */
@@ -169,8 +197,17 @@
     </style>
 </head>
 <body>
-    <!-- Arka plan animasyonu -->
+    <!-- Arka plan RGB animasyonu -->
     <div class="background-animation"></div>
+
+    <!-- Kayan yıldızlar -->
+    <div class="stars">
+        <div class="star" style="top: 30%; left: 10%; width: 3px; height: 3px; animation-duration: 4s;"></div>
+        <div class="star" style="top: 50%; left: 50%; width: 2px; height: 2px; animation-duration: 5s;"></div>
+        <div class="star" style="top: 70%; left: 80%; width: 4px; height: 4px; animation-duration: 6s;"></div>
+        <div class="star" style="top: 10%; left: 70%; width: 2px; height: 2px; animation-duration: 4s;"></div>
+        <!-- Daha fazla yıldız ekleyebilirsiniz... -->
+    </div>
 
     <!-- Navbar -->
     <div class="navbar">
@@ -182,7 +219,7 @@
         <a href="feedback.html">Geri Bildirim</a>
         <a href="reset.html">Şifre Sıfırla</a>
     </div>
-    
+
     <!-- Profil kısmı -->
     <div class="profile" onclick="window.location.href='profile.html'">
         <img src="https://minotar.net/avatar/steve" id="playerSkin" alt="Profil Resmi">

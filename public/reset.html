@@ -5,44 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Şifre Sıfırlama</title>
     <style>
+        /* Genel stil ayarları */
         body {
             font-family: Arial, sans-serif;
-            background-color: #222;
+            margin: 0;
+            padding: 0;
             color: white;
             text-align: center;
+            background: #1a1a1a;
+            overflow: hidden;
+            position: relative;
         }
+
+        /* RGB arka plan animasyonu */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(45deg, rgb(0, 255, 255), rgb(0, 0, 255), rgb(255, 0, 255), rgb(255, 255, 0));
+            background-size: 400% 400%;
+            animation: rgbAnimation 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes rgbAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Form container */
         .container {
-            max-width: 400px;
-            margin: auto;
-            background: #333;
-            padding: 20px;
+            max-width: 500px;
+            margin: 100px auto;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
             border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1.5s ease-out;
         }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         input {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
             border-radius: 5px;
-            border: 1px solid #aaa;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            background-color: #444;
+            color: white;
+            box-sizing: border-box;
+            transition: background-color 0.3s;
         }
+
+        input:focus {
+            background-color: #555;
+            border-color: #3498db;
+        }
+
         button {
-            padding: 10px 20px;
+            width: 100%;
+            padding: 15px;
             background-color: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
+
         button:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Bağlantı ve geri bildirim */
+        p {
+            font-size: 1em;
+            margin-top: 20px;
+        }
+
+        p a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobil uyumlu stil */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 50px auto;
+            }
+
+            input, button {
+                padding: 12px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- RGB Arka Plan -->
+    <div class="background-animation"></div>
+
+    <!-- Şifre sıfırlama formu -->
     <div class="container">
         <h1>Şifrenizi Sıfırlayın</h1>
         <form id="resetForm">
+            <input type="text" id="username" placeholder="Kullanıcı Adınız" required>
             <input type="email" id="resetEmail" placeholder="E-posta Adresi" required>
+            <input type="password" id="newPassword" placeholder="Sıfırlamak İstediğiniz Şifre" required>
             <button type="submit">Şifreyi Sıfırla</button>
         </form>
         <p>Şifrenizi hatırladınız mı? <a href="login.html">Giriş Yapın</a></p>
@@ -52,15 +148,20 @@
         document.getElementById("resetForm").addEventListener("submit", function(e) {
             e.preventDefault();
 
+            const username = document.getElementById("username").value;
             const email = document.getElementById("resetEmail").value;
+            const newPassword = document.getElementById("newPassword").value;
 
-            if (email) {
-                // E-posta gönderme işlemi simüle ediliyor
-                alert("Şifre sıfırlama talebi gönderildi. E-posta adresiniz: " + email);
-                // Burada PHP veya Node.js kullanarak gerçek bir e-posta gönderme işlemi yapılabilir.
-                window.location.href = "index.html"; // Ana sayfaya yönlendir
+            if (username && email && newPassword) {
+                // Mailto link oluşturma
+                const mailtoLink = `mailto:boxpvp1212@gmail.com?subject=Şifre Sıfırlama Talebi&body=Kullanıcı Adı: ${encodeURIComponent(username)}%0A%0AE-posta: ${encodeURIComponent(email)}%0A%0AYeni Şifre: ${encodeURIComponent(newPassword)}%0A%0AŞifremi sıfırlamak istiyorum.`;
+
+                // Kullanıcının varsayılan e-posta istemcisini aç
+                window.location.href = mailtoLink;
+
+                alert("Şifre sıfırlama talebiniz gönderildi!");
             } else {
-                alert("Lütfen geçerli bir e-posta adresi girin!");
+                alert("Lütfen tüm alanları doldurun!");
             }
         });
     </script>

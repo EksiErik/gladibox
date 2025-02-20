@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geri Bildirim</title>
+    <title>Kredi Alma</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,8 +17,9 @@
             align-items: center;
             overflow: hidden;
         }
+
         .container {
-            max-width: 500px;
+            max-width: 600px;
             background: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 10px;
@@ -50,25 +51,16 @@
             color: #ddd;
         }
 
-        input, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: none;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            resize: vertical;
-        }
-
         button {
             background-color: #2980b9;
             color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
             font-size: 1.2em;
+            margin: 15px;
         }
 
         button:hover {
@@ -94,33 +86,25 @@
 </head>
 <body>
     <div class="container">
-        <h1>Geri Bildirim Gönder</h1>
+        <h1>Kredi Alma Sayfası</h1>
+        <p>Farklı kredi seçeneklerini alarak oyun içindeki avantajınızı artırın.</p>
 
-        <!-- E-posta ve Geri Bildirim Formu -->
-        <input type="email" id="email" placeholder="E-posta Adresinizi Girin" required>
-        <textarea id="feedback" placeholder="Geri bildiriminizi yazın" rows="6" required></textarea>
-        <button onclick="submitFeedback()">Gönder</button>
+        <button onclick="addCredits(10)">10 Kredi Al</button>
+        <button onclick="addCredits(50)">50 Kredi Al</button>
+        <button onclick="addCredits(100)">100 Kredi Al</button>
 
-        <p id="message"></p>
+        <div class="footer">
+            <p><a href="profile.html">Profil Sayfasına Git</a></p>
+        </div>
     </div>
 
     <script>
-        function submitFeedback() {
-            const email = document.getElementById("email").value;
-            const feedback = document.getElementById("feedback").value;
-
-            if (email && feedback) {
-                // Geri bildirimi ve e-posta adresini bir URL'ye yönlendiriyoruz
-                const mailtoLink = `mailto:boxpvp1212@gmail.com?subject=Geri Bildirim&body=E-posta:%20${encodeURIComponent(email)}%0A%0AGeri%20Bildirim:%20${encodeURIComponent(feedback)}`;
-
-                // Mailto bağlantısına yönlendirme yaparak e-posta gönderim ekranını açıyoruz
-                window.location.href = mailtoLink;
-
-                // Kullanıcıya teşekkür mesajı göster
-                document.getElementById("message").textContent = "Geri bildiriminiz için teşekkür ederiz!";
-            } else {
-                document.getElementById("message").textContent = "Lütfen hem e-posta adresinizi hem de geri bildiriminizi doldurun!";
-            }
+        // Kredi ekleme fonksiyonu
+        function addCredits(amount) {
+            let currentCredits = parseInt(localStorage.getItem("credits")) || 0;
+            currentCredits += amount;
+            localStorage.setItem("credits", currentCredits);
+            alert(amount + " kredi eklendi! Şu anda toplam " + currentCredits + " krediniz var.");
         }
     </script>
 </body>
