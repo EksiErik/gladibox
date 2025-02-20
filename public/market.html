@@ -5,19 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market</title>
     <style>
+        /* Genel stil ve arka plan ayarları */
         body {
             font-family: Arial, sans-serif;
             background-color: #222;
             color: white;
             text-align: center;
+            overflow: hidden;
         }
+
         .container {
             max-width: 800px;
             margin: auto;
             background: #333;
             padding: 20px;
             border-radius: 10px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
+
+        /* Arka plan animasyonu */
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #3498db, #8e44ad);
+            animation: gradientAnimation 10s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Market öğeleri */
         .item {
             background: #444;
             padding: 15px;
@@ -26,7 +52,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            overflow: hidden;
         }
+
+        /* Satın al butonları */
         .buy-btn {
             background: #27ae60;
             color: white;
@@ -34,33 +64,184 @@
             padding: 10px 15px;
             cursor: pointer;
             border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .buy-btn:hover {
             background: #2ecc71;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Düzenleme butonu */
+        .edit-btn {
+            background-color: #f39c12;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            background-color: #e67e22;
+        }
+
+        /* Item düzenleme alanı */
+        .edit-mode .item {
+            background: #555;
+            cursor: pointer;
+        }
+
+        .edit-form {
+            margin-top: 20px;
+            display: none;
+            text-align: left;
+            background: #444;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .edit-form input {
+            margin: 10px;
+            padding: 5px;
+            font-size: 14px;
+        }
+        
+        /* Market düzenleme formu */
+        .no-access {
+            background-color: #e74c3c;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Arka plan animasyonu -->
+    <div class="background-animation"></div>
+
+    <!-- Market container -->
+    <div class="container" id="marketContainer">
         <h1>Market</h1>
-        <div class="item">
-            <span>Elmas Kılıç</span>
-            <button class="buy-btn" onclick="buyItem('Elmas Kılıç')">Satın Al - 500 Coin</button>
-        </div>
-        <div class="item">
-            <span>Zırh Seti</span>
-            <button class="buy-btn" onclick="buyItem('Zırh Seti')">Satın Al - 1000 Coin</button>
-        </div>
-        <div class="item">
-            <span>Altın Elma</span>
-            <button class="buy-btn" onclick="buyItem('Altın Elma')">Satın Al - 200 Coin</button>
-        </div>
+        <div id="itemsList"></div> <!-- Dinamik öğe ekleyeceğiz buraya -->
         <p id="message"></p>
     </div>
 
+    <!-- Düzenleme butonu -->
+    <div id="editButtonContainer">
+        <button id="editBtn" class="edit-btn" onclick="toggleEditMode()">Market Düzenle</button>
+    </div>
+
+    <!-- Eşya ekleme formu -->
+    <div class="edit-form" id="editForm">
+        <h2>Yeni Eşya Ekle</h2>
+        <input type="text" id="itemName" placeholder="Eşya Adı">
+        <input type="number" id="itemPrice" placeholder="Eşya Fiyatı">
+        <button onclick="addItem()">Eşya Ekle</button>
+        <button onclick="saveChanges()">Değişiklikleri Kaydet</button>
+    </div>
+
     <script>
+        // Roller ve yetkili kullanıcılar
+        const allowedUsers = ['EksiErik', 'Bronqa', 'isaac_foster0'];
+
+        // Kullanıcı adı kontrolü
+        function checkAccess() {
+            const username = localStorage.getItem("username");
+            
+            // Eğer kullanıcı yoksa, giriş sayfasına yönlendirilir
+            if (!username) {
+                alert("Lütfen giriş yapın!");
+                window.location.href = "login.html"; // Giriş sayfasına yönlendir
+                return;
+            }
+
+            // Eğer kullanıcı yetkili değilse, market düzenleme butonu gizlenir
+            if (allowedUsers.includes(username)) {
+                document.getElementById("editBtn").style.display = "block"; // Düzenleme butonunu göster
+            } else {
+                document.getElementById("marketContainer").innerHTML = `<div class="no-access">Bu sayfayı düzenleme yetkiniz yok!</div>`;
+            }
+        }
+
+        // Market öğelerini kaydet
+        function saveChanges() {
+            const items = [];
+            document.querySelectorAll('.item').forEach(item => {
+                const name = item.getAttribute('data-name');
+                const price = item.getAttribute('data-price');
+                items.push({ name, price });
+            });
+            localStorage.setItem('marketItems', JSON.stringify(items));
+            alert('Değişiklikler kaydedildi!');
+        }
+
+        // Eşyaları yükle
+        function loadItems() {
+            const savedItems = JSON.parse(localStorage.getItem('marketItems')) || [];
+            const itemsList = document.getElementById('itemsList');
+            itemsList.innerHTML = ''; // İlk başta temizle
+
+            savedItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('item');
+                itemElement.setAttribute('data-name', item.name);
+                itemElement.setAttribute('data-price', item.price);
+                itemElement.innerHTML = `
+                    <span>${item.name}</span>
+                    <button class="buy-btn" onclick="buyItem('${item.name}')">Satın Al - ${item.price} Coin</button>
+                `;
+                itemsList.appendChild(itemElement);
+            });
+        }
+
+        // Eşya ekleme fonksiyonu
+        function addItem() {
+            const name = document.getElementById('itemName').value;
+            const price = document.getElementById('itemPrice').value;
+
+            if (name && price) {
+                const newItem = {
+                    name: name,
+                    price: price
+                };
+                const savedItems = JSON.parse(localStorage.getItem('marketItems')) || [];
+                savedItems.push(newItem);
+                localStorage.setItem('marketItems', JSON.stringify(savedItems));
+                loadItems(); // Eşyaları yeniden yükle
+                document.getElementById('itemName').value = '';
+                document.getElementById('itemPrice').value = '';
+            }
+        }
+
+        // Satın alma fonksiyonu
         function buyItem(item) {
             document.getElementById("message").textContent = item + " satın alındı!";
+        }
+
+        // Düzenleme moduna geçiş yapma
+        function toggleEditMode() {
+            const marketContainer = document.getElementById('marketContainer');
+            const editForm = document.getElementById('editForm');
+
+            if (marketContainer.classList.contains('edit-mode')) {
+                marketContainer.classList.remove('edit-mode');
+                editForm.style.display = 'none';
+            } else {
+                marketContainer.classList.add('edit-mode');
+                editForm.style.display = 'block';
+            }
+        }
+
+        // Sayfa yüklendiğinde yetki kontrolü yapılır ve eşyalar yüklenir
+        window.onload = function() {
+            checkAccess();
+            loadItems();
         }
     </script>
 </body>

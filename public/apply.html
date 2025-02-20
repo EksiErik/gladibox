@@ -10,6 +10,8 @@
             background-color: #222;
             color: white;
             text-align: center;
+            margin: 0;
+            padding: 20px;
         }
         .container {
             max-width: 400px;
@@ -17,38 +19,70 @@
             background: #333;
             padding: 20px;
             border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
         }
         input, textarea, button {
             width: 100%;
             padding: 10px;
             margin-top: 10px;
-            border: none;
+            border: 1px solid #555;
             border-radius: 5px;
+            background: #444;
+            color: white;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #bbb;
         }
         button {
             background: #2980b9;
             color: white;
+            font-weight: bold;
             cursor: pointer;
+            transition: 0.3s;
         }
         button:hover {
             background: #3498db;
         }
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #2ecc71;
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Yetkili Başvurusu</h1>
-        <input type="text" id="name" placeholder="Adınız" required>
-        <input type="email" id="email" placeholder="E-Posta Adresiniz" required>
-        <textarea id="reason" placeholder="Neden Yetkili Olmak İstiyorsunuz?" rows="4"></textarea>
-        <button onclick="submitApplication()">Başvur</button>
+        <form id="applicationForm">
+            <input type="text" id="name" placeholder="Adınız" required maxlength="50">
+            <input type="email" id="email" placeholder="E-Posta Adresiniz" required>
+            <textarea id="reason" placeholder="Neden Yetkili Olmak İstiyorsunuz?" rows="4" required maxlength="500"></textarea>
+            <button type="submit">Başvur</button>
+        </form>
         <p id="message"></p>
     </div>
 
     <script>
-        function submitApplication() {
-            document.getElementById("message").textContent = "Başvurunuz alınmıştır. Teşekkür ederiz!";
-        }
+        document.getElementById("applicationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Sayfanın yenilenmesini engelle
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let reason = document.getElementById("reason").value.trim();
+            let messageBox = document.getElementById("message");
+
+            if (name === "" || email === "" || reason === "") {
+                messageBox.textContent = "Lütfen tüm alanları doldurun!";
+                messageBox.style.color = "#e74c3c";
+                return;
+            }
+
+            messageBox.textContent = "Başvurunuz alınmıştır. Teşekkür ederiz!";
+            messageBox.style.color = "#2ecc71";
+
+            // Gelecekte başvuruları bir sunucuya göndermek için buraya AJAX ekleyebilirsin.
+        });
     </script>
+
 </body>
 </html>
